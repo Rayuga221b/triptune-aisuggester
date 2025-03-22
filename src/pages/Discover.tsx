@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -87,7 +86,6 @@ const Discover = () => {
     
     // Show a success message
     uiToast({
-      title: "Destination Selected",
       description: `${destination.name}, ${destination.location} has been selected.`,
       duration: 3000,
     });

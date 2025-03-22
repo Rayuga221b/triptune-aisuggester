@@ -5,7 +5,7 @@ import { Calendar, Clock, MapPin, Trash2, PlusCircle, MoveVertical } from 'lucid
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Destination } from './DestinationCard';
+import { Destination } from '@/types/itinerary';
 
 export interface ItineraryDay {
   id: string;
