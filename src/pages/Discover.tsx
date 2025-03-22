@@ -2,18 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Search, MapPin, Filter, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import Navbar from '@/components/Navbar';
-import DestinationCard, { Destination } from '@/components/DestinationCard';
-import PreferenceSelector, { defaultPreferences } from '@/components/PreferenceSelector';
-import { AIRecommendationService } from '@/services/AIRecommendationService';
-import { toast } from "sonner";
 import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
+import Navbar from '@/components/Navbar';
+import { defaultPreferences } from '@/components/PreferenceSelector';
+import { AIRecommendationService } from '@/services/AIRecommendationService';
+import { Destination } from '@/types/itinerary';
+import SearchAndFilterBar from '@/components/discover/SearchAndFilterBar';
+import DestinationList from '@/components/discover/DestinationList';
+import DestinationDetail from '@/components/discover/DestinationDetail';
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -30,7 +27,7 @@ const Discover = () => {
   const [previousSelections, setPreviousSelections] = useState<string[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const { toast } = useToast();
+  const { toast: uiToast } = useToast();
   
   useEffect(() => {
     // Get initial destinations from AI service
@@ -89,7 +86,7 @@ const Discover = () => {
     }
     
     // Show a success message
-    toast({
+    uiToast({
       title: "Destination Selected",
       description: `${destination.name}, ${destination.location} has been selected.`,
       duration: 3000,
@@ -165,139 +162,28 @@ const Discover = () => {
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search destinations..."
-                  className="pl-9 w-full sm:w-[260px]"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="outline">
-                    <Filter className="h-4 w-4 mr-2" />
-                    Preferences
-                  </Button>
-                </SheetTrigger>
-                <SheetContent className="w-full sm:max-w-lg">
-                  <SheetHeader>
-                    <SheetTitle>Travel Preferences</SheetTitle>
-                    <SheetDescription>
-                      Customize your preferences to get tailored destination recommendations.
-                    </SheetDescription>
-                  </SheetHeader>
-                  
-                  <div className="mt-6">
-                    <PreferenceSelector
-                      preferences={preferences}
-                      onPreferenceToggle={handlePreferenceToggle}
-                      onImportanceChange={handleImportanceChange}
-                    />
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
+            <SearchAndFilterBar 
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              preferences={preferences}
+              onPreferenceToggle={handlePreferenceToggle}
+              onImportanceChange={handleImportanceChange}
+            />
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <div className="lg:col-span-2 xl:col-span-3">
-              <div className="mb-6 flex items-center justify-between">
-                <div className="flex items-center">
-                  <Sparkles className="h-4 w-4 text-primary mr-2" />
-                  <span className="text-sm font-medium text-primary">AI-Recommended</span>
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  Showing {filteredDestinations.length} destinations
-                </span>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredDestinations.map((destination) => (
-                  <DestinationCard
-                    key={destination.id}
-                    destination={destination}
-                    onFavorite={handleFavoriteToggle}
-                    onSelect={handleDestinationSelect}
-                  />
-                ))}
-                
-                {filteredDestinations.length === 0 && (
-                  <div className="col-span-full py-12 text-center">
-                    <p className="text-muted-foreground">
-                      No destinations found matching your search.
-                    </p>
-                    <Button 
-                      variant="link" 
-                      className="mt-2"
-                      onClick={() => setSearchQuery('')}
-                    >
-                      Clear search
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
+            <DestinationList 
+              destinations={filteredDestinations}
+              onFavoriteToggle={handleFavoriteToggle}
+              onDestinationSelect={handleDestinationSelect}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
             
-            <div className="lg:col-span-1 row-start-1 lg:row-auto">
-              <div className="sticky top-28 glass rounded-xl p-6 shadow-subtle">
-                <h2 className="text-xl font-semibold mb-4">Selected Destination</h2>
-                
-                {selectedDestination ? (
-                  <div className="space-y-4">
-                    <div className="aspect-[4/3] rounded-lg overflow-hidden">
-                      <img 
-                        src={selectedDestination.image} 
-                        alt={selectedDestination.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    
-                    <div>
-                      <h3 className="text-lg font-medium">{selectedDestination.name}</h3>
-                      <div className="flex items-center text-sm text-muted-foreground mt-1">
-                        <MapPin className="h-3.5 w-3.5 mr-1" />
-                        <span>{selectedDestination.location}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-1.5">
-                      {selectedDestination.tags.map((tag, index) => (
-                        <span 
-                          key={index}
-                          className="px-2 py-1 text-xs bg-secondary rounded-full text-foreground/80"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    <Separator />
-                    
-                    <p className="text-sm text-foreground/80">
-                      {selectedDestination.description}
-                    </p>
-                    
-                    <Button 
-                      className="w-full"
-                      onClick={handleViewItinerary}
-                    >
-                      View Itinerary
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="py-8 text-center">
-                    <MapPin className="h-10 w-10 text-muted-foreground/50 mx-auto mb-3" />
-                    <p className="text-muted-foreground">
-                      Select a destination to view details and create an itinerary
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
+            <DestinationDetail 
+              selectedDestination={selectedDestination}
+              onViewItinerary={handleViewItinerary}
+            />
           </div>
         </div>
       </motion.main>

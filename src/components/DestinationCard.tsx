@@ -3,18 +3,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Heart, Clock, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-export interface Destination {
-  id: string;
-  name: string;
-  location: string;
-  description: string;
-  image: string;
-  duration: string;
-  rating: number;
-  tags: string[];
-  isFavorite?: boolean;
-}
+import { Destination } from '@/types/itinerary';
 
 interface DestinationCardProps {
   destination: Destination;
@@ -37,6 +26,7 @@ const DestinationCard = ({
     image,
     duration,
     tags,
+    rating,
     isFavorite = false
   } = destination;
 
