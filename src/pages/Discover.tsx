@@ -46,12 +46,10 @@ const Discover = () => {
     }
   }, [location.search]);
   
-  // Update recommendations when preferences change
   useEffect(() => {
     updateRecommendations();
   }, [preferences, previousSelections]);
   
-  // Handle search
   useEffect(() => {
     if (searchQuery.trim() === '') {
       setFilteredDestinations(destinations);

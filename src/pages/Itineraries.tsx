@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import Navbar from '@/components/Navbar';
 import ItineraryBuilder, { ItineraryDay, ItineraryActivity } from '@/components/ItineraryBuilder';
 import { AIRecommendationService, destinations } from '@/services/AIRecommendationService';
+import { Destination } from '@/types/itinerary';
 import { v4 as uuidv4 } from 'uuid';
 
 const fadeIn = {
@@ -29,7 +30,7 @@ const fadeIn = {
 
 const Itineraries = () => {
   const [itineraryDays, setItineraryDays] = useState<ItineraryDay[]>([]);
-  const [selectedDestination, setSelectedDestination] = useState(destinations[0]);
+  const [selectedDestination, setSelectedDestination] = useState<Destination>(destinations[0]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
