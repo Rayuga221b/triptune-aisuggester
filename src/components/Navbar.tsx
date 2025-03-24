@@ -40,7 +40,7 @@ const Navbar = () => {
           className="flex items-center space-x-2 text-foreground"
         >
           <Globe className="h-6 w-6 text-primary" />
-          <span className="text-xl font-semibold">Journey<span className="text-primary">AI</span></span>
+          <span className="text-xl font-semibold">Trip<span className="text-primary">Tune</span></span>
         </Link>
         
         {/* Desktop Navigation */}

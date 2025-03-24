@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center mb-6 md:mb-0">
             <MapPin className="h-6 w-6 text-primary mr-2" />
-            <span className="text-xl font-semibold">Journey<span className="text-primary">AI</span></span>
+            <span className="text-xl font-semibold">Trip<span className="text-primary">Tune</span></span>
           </div>
           
           <div className="flex flex-wrap gap-6 justify-center mb-6 md:mb-0">
