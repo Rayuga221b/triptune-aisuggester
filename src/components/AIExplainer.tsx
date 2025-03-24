@@ -40,7 +40,7 @@ const AIExplainer = ({ className }: AIExplainerProps) => {
         </div>
         <h2 className="text-2xl font-semibold mb-3">How Our AI Works For You</h2>
         <p className="text-muted-foreground">
-          JourneyAI uses advanced machine learning to understand your travel preferences
+          TripTune uses advanced machine learning to understand your travel preferences
           and create personalized itineraries that evolve as you provide feedback.
         </p>
       </div>

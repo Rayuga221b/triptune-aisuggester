@@ -209,7 +209,7 @@ const Index = () => {
             className="text-center mb-12"
             variants={fadeIn}
           >
-            <h2 className="text-3xl font-semibold mb-4">How JourneyAI Works</h2>
+            <h2 className="text-3xl font-semibold mb-4">How TripTune Works</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Our AI-powered platform simplifies travel planning by understanding what matters most to you.
             </p>

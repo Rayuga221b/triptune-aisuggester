@@ -30,7 +30,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} JourneyAI. All rights reserved.
+          &copy; {new Date().getFullYear()} TripTune. All rights reserved.
         </div>
       </div>
     </footer>
