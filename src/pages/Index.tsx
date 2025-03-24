@@ -41,14 +41,14 @@ const Index = () => {
           <motion.div variants={fadeIn} className="max-w-3xl mx-auto text-center">
             <motion.div className="inline-flex items-center px-3 py-1 mb-6 rounded-full bg-primary/10 text-primary text-sm font-medium">
               <span className="animate-pulse mr-2">●</span>
-              AI-Powered Travel Planning
+              AI-Powered Travel Itinerary
             </motion.div>
             
             <motion.h1 
               className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 leading-tight tracking-tight"
               variants={fadeIn}
             >
-              Discover your perfect journey with{' '}
+              Discover your perfect Trip with{' '}
               <span className="text-primary">AI guidance</span>
             </motion.h1>
             
